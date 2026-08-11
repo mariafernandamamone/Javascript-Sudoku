@@ -64,10 +64,19 @@ while (casillasVacias > 0) {
     Number(prompt("¿Qué columna quieres modificar del 1 al 9?")) - 1;
   let numero = Number(prompt("¿Qué número quieres poner del 1 al 9"));
 
+  // COMPROBAR QUE LA FILA Y LA COLUMNA SEAN VÁLIDAS
+  if (fila < 0 || fila > 8 || columna < 0 || columna > 8) {
+    alert("Fila o columna inválida.");
+} 
+  
   // COMPROBAR SI EL NÚMERO INGRESADO ES VÁLIDO
-  if (numero < 1 || numero > 9) {
+  else if (numero < 1 || numero > 9) {
     alert("Número inválido.");
-  } else if (tablero[fila][columna] === 0) {
+  } 
+  
+  // COMPROBAR QUE EL CASILLERO NO ESTÉ OCUPADO
+   else if (tablero[fila][columna] === 0) {
+    
     // COMPROBAR QUE EL NÚMERO NO ESTÉ REPETIDO EN LA FILA
     let numeroRepetidoFila = false;
 
