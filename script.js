@@ -14,30 +14,123 @@ const tablero = [
 
 // MOSTRAR TABLERO INICIAL
 
-let mostrar = "";
+function mostrarTablero() {
+  let mostrar = "";
+
+  for (let i = 0; i < tablero.length; i++) {
+    for (let j = 0; j < tablero[i].length; j++) {
+      if (tablero[i][j] === 0) {
+        mostrar += ". ";
+      } else {
+        mostrar += tablero[i][j] + " ";
+      }
+
+      // DIVISIÓN VERTICAL
+
+      if (j === 2 || j === 5) {
+        mostrar += "| ";
+      }
+    }
+    mostrar += "\n";
+
+    // DIVISIÓN HORIZONTAL
+
+    if (i === 2 || i === 5) {
+      mostrar += "----+----+----\n";
+    }
+  }
+  alert(mostrar);
+}
+
+mostrarTablero();
+
+// CONTAR CASILLAS VACÍAS
+let casillasVacias = 0;
 
 for (let i = 0; i < tablero.length; i++) {
   for (let j = 0; j < tablero[i].length; j++) {
     if (tablero[i][j] === 0) {
-      mostrar += ". ";
-    } else {
-      mostrar += tablero[i][j] + " ";
-    }
-
-    // DIVISIÓN VERTICAL
-
-    if (j === 2 || j === 5) {
-      mostrar += "| ";
+        casillasVacias++;
     }
   }
-  mostrar += "\n";
-
-  // DIVISIÓN HORIZONTAL
-
-  if (i === 2 || i === 5) {
-    mostrar += "----+----+----\n";
-  }
-
 }
 
-alert(mostrar);
+// COMENZAR EL JUEGO
+while (casillasVacias > 0) {
+  // PEDIR DATOS AL USUARIO
+
+  let fila = Number(prompt("¿Qué fila quieres modificar del 1 al 9?")) - 1;
+  let columna =
+    Number(prompt("¿Qué columna quieres modificar del 1 al 9?")) - 1;
+  let numero = Number(prompt("¿Qué número quieres poner del 1 al 9"));
+
+  // COMPROBAR SI EL NÚMERO INGRESADO ES VÁLIDO
+  if (numero < 1 || numero > 9) {
+    alert("Número inválido.");
+  } else if (tablero[fila][columna] === 0) {
+    // COMPROBAR QUE EL NÚMERO NO ESTÉ REPETIDO EN LA FILA
+    let numeroRepetidoFila = false;
+
+    for (let j = 0; j < tablero[fila].length; j++) {
+      if (tablero[fila][j] === numero) {
+        numeroRepetidoFila = true;
+      }
+    }
+
+    // COMPROBAR QUE EL NÚMERO NO ESTÉ REPETIDO EN LA COLUMNA
+    let numeroRepetidoColumna = false;
+
+    for (let i = 0; i < tablero.length; i++) {
+      if (tablero[i][columna] === numero) {
+        numeroRepetidoColumna = true;
+      }
+    }
+
+    // COMPROBAR QUE EL NÚMERO NO ESTÉ REPETIDO EN EL CUADRANTE
+    let numeroRepetidoCuadrante = false;
+    let inicioFila = Math.floor(fila / 3) * 3;
+    let inicioColumna = Math.floor(columna / 3) * 3;
+
+    for (let i = inicioFila; i < inicioFila + 3; i++) {
+      for (let j = inicioColumna; j < inicioColumna + 3; j++) {
+        if (tablero[i][j] === numero) {
+          numeroRepetidoCuadrante = true;
+        }
+      }
+    }
+
+    // ALERT AVISANDO QUE EL NÚMERO ESTÁ REPETIDO
+    let mensaje = "Ese número ya se encuentra en: ";
+
+    if (numeroRepetidoFila) {
+        mensaje += "la fila ";
+    }
+
+    if (numeroRepetidoColumna) {
+        mensaje += "la columna ";
+    }
+
+    if (numeroRepetidoCuadrante) {
+        mensaje += "el cuadrante ";
+    }
+
+    alert(mensaje);
+
+    // COLOCAR EL NÚMERO EN LA CASILLA SI NO SE ENCUENTRA REPETIDO
+    if (
+      !numeroRepetidoFila &&
+      !numeroRepetidoColumna &&
+      !numeroRepetidoCuadrante
+    ) {
+      tablero[fila][columna] = numero;
+      casillasVacias--;
+    }
+  } else {
+    alert("Ese casillero ya está ocupado");
+  }
+
+  mostrarTablero();
+}
+
+mostrarTablero();
+alert("Ganaste!!");
