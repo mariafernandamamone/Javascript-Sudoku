@@ -50,7 +50,7 @@ let casillasVacias = 0;
 for (let i = 0; i < tablero.length; i++) {
   for (let j = 0; j < tablero[i].length; j++) {
     if (tablero[i][j] === 0) {
-        casillasVacias++;
+      casillasVacias++;
     }
   }
 }
@@ -99,29 +99,29 @@ while (casillasVacias > 0) {
       }
     }
 
-    // ALERT AVISANDO QUE EL NÚMERO ESTÁ REPETIDO
-    let mensaje = "Ese número ya se encuentra en: ";
-
-    if (numeroRepetidoFila) {
-        mensaje += "la fila ";
-    }
-
-    if (numeroRepetidoColumna) {
-        mensaje += "la columna ";
-    }
-
-    if (numeroRepetidoCuadrante) {
-        mensaje += "el cuadrante ";
-    }
-
-    alert(mensaje);
-
-    // COLOCAR EL NÚMERO EN LA CASILLA SI NO SE ENCUENTRA REPETIDO
+    // SI EL NÚMERO SE ENCUENTRA REPETIDO MOSTRARLO EN UN MENSAJE
     if (
-      !numeroRepetidoFila &&
-      !numeroRepetidoColumna &&
-      !numeroRepetidoCuadrante
+      numeroRepetidoFila ||
+      numeroRepetidoColumna ||
+      numeroRepetidoCuadrante
     ) {
+      let mensaje = "Ese número ya se encuentra en: ";
+
+      if (numeroRepetidoFila) {
+        mensaje += "la fila ";
+      }
+
+      if (numeroRepetidoColumna) {
+        mensaje += "la columna ";
+      }
+
+      if (numeroRepetidoCuadrante) {
+        mensaje += "el cuadrante ";
+      }
+
+      alert(mensaje);
+    } else {
+      // COLOCAR EL NÚMERO EN LA CASILLA SI NO SE ENCUENTRA REPETIDO
       tablero[fila][columna] = numero;
       casillasVacias--;
     }
